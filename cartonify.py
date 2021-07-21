@@ -15,7 +15,6 @@ from PIL import ImageTk, Image
 #FileBox to choose file
 def upload_file():
     Imagepath = easygui.fileopenbox()
-    print(Imagepath)
     cartoonify(Imagepath)
 
 #Function to cartoonify the image
@@ -48,8 +47,14 @@ def cartoonify(Imagepath):
 
     #Giving the cartoon effect
     cartoonImage = cv2.bitwise_and(colorImage, colorImage, mask=getEdge)
-    resizedCartoon = cv2.resize(cartoonImage, (540, 960))
-    plt.imshow(resizedCartoon, cmap='gray')
+    # resizedCartoon = cv2.resize(cartoonImage, (540 , 960))
+
+    #Photos in each step and the cartoonifies picture
+    images=[resizedColoured, resizedGray, resizedSmooth, resizedEdge, resizedColor, cartoonImage]
+    fig, axes = plt.subplots(3,2, figsize=(8,8), subplot_kw={'xticks':[], 'yticks':[]}, gridspec_kw=dict(hspace=0.1, wspace=0.1))
+    for i, ax in enumerate(axes.flat):
+        ax.imshow(images[i], cmap='gray')
+    # //save button code
     plt.show()
 
 upload_file()
